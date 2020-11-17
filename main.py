@@ -6,9 +6,9 @@
 
 
 # 这是系统的登录界面
-
+import json
 import tkinter
-import loginGUI,signupGUI
+import loginGUI, signupGUI
 from tkinter import messagebox, END
 
 
@@ -18,9 +18,9 @@ class Login(object):
         self.root = tkinter.Toplevel()
         # 给主窗口设置标题内容
         self.root.title("课程管理系统")
-        self.root.geometry('450x300')
+        # self.root.geometry('450x300')
         # 运行代码时记得添加一个gif图片文件，不然是会出错的
-        self.canvas = tkinter.Canvas(self.root, height=200, width=500)  # 创建画布
+        self.canvas = tkinter.Canvas(self.root, height=250, width=500)  # 创建画布
         self.image_file = tkinter.PhotoImage(file='abc.gif')  # 加载图片文件
         self.image = self.canvas.create_image(0, 0, anchor='nw', image=self.image_file)  # 将图片置于画布上
         self.canvas.pack(side='top')  # 放置画布（为上端）
@@ -40,8 +40,18 @@ class Login(object):
         # 创建一个注册系统的按钮
         self.siginUp_button = tkinter.Button(self.root, command=self.siginUp_interface, text="Sign up", width=10)
 
-        self.Button1=tkinter.Button(self.root,background="#FF0000",activebackground="#0000ff",activeforeground="#228B22",width=10)
-        # 完成布局
+        self.Button1 = tkinter.Button(self.root, background="#FF0000", activebackground="#0000ff",
+                                      activeforeground="#228B22", width=10)
+
+        # 居中显示
+        width = 450
+        height = 300
+        screenwidth = self.root.winfo_screenwidth()
+        screenheight = self.root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+        self.root.geometry(alignstr)
+        # 窗口大小不变
+        self.root.resizable(0, 0)
 
     def gui_arrang(self):
         self.label_account.place(x=60, y=170)
@@ -66,7 +76,7 @@ class Login(object):
         password = self.input_password.get().ljust(10, " ")
         # 对账户信息进行验证，普通用户返回user，管理员返回master，账户错误返回noAccount，密码错误返回noPassword
 
-        verifyResult = loginGUI.verifyAccountData(account, password)
+        verifyResult = self.verifyAccountData(account, password)
 
         if verifyResult == 'master':
             self.root.withdraw()
@@ -87,6 +97,26 @@ class Login(object):
 
     def rootagain(self):
         self.root.deiconify()
+
+    def verifyAccountData(self, account, password):
+        # account=account[:-2]
+        # password=password[:-2]
+        f = open(r".\data\data.json", encoding='UTF-8')  # 设置以utf-8解码模式读取文件，encoding参数必须设置，否则默认以gbk模式读取文件，当文件中包含中文时，会报错
+        setting = json.load(f)
+
+        aaa = setting[0]['account'].ljust(10)
+
+        for i in range(len(setting)):
+            if setting[i]['account'].ljust(10) == account and setting[i]['password'].ljust(10) == password:
+                if setting[i]['power'] == 1:
+                    return "master"
+                if setting[i]['power'] == 0:
+                    return "user"
+                break
+            if setting[i]["account"].ljust(10) == account or setting[i]["password"].ljust(10) == password:
+                return "noPassword"
+                break
+        return "noAccount"
 
 
 def main():

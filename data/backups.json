@@ -1,0 +1,210 @@
+[
+    {
+        "course": "近代史",
+        "credit": 3
+    },
+    {
+        "course": "思修",
+        "credit": 3
+    },
+    {
+        "course": "毛概",
+        "credit": 3
+    },
+    {
+        "course": "马原",
+        "credit": 3
+    },
+    {
+        "course": "大学英语",
+        "credit": 4
+    },
+    {
+        "course": "高级英语",
+        "credit": 4
+    },
+    {
+        "course": "高级英语阅读",
+        "credit": 2
+    },
+    {
+        "course": "体育1",
+        "credit": 1
+    },
+    {
+        "course": "体育2",
+        "credit": 1
+    },
+    {
+        "course": "体育3",
+        "credit": 1
+    },
+    {
+        "course": "体育4",
+        "credit": 1
+    },
+    {
+        "course": "高数1",
+        "credit": 5.5
+    },
+    {
+        "course": "大物1",
+        "credit": 3.5
+    },
+    {
+        "course": "大物2",
+        "credit": 3.5
+    },
+    {
+        "course": "大物实验1",
+        "credit": 1
+    },
+    {
+        "course": "大物实验2",
+        "credit": 1
+    },
+    {
+        "course": "电路与电子技术",
+        "credit": 3
+    },
+    {
+        "course": "电子与电子技术实验",
+        "credit": 1
+    },
+    {
+        "course": "高数2",
+        "credit": 5.5
+    },
+    {
+        "course": "集合与图论",
+        "credit": 2.5
+    },
+    {
+        "course": "代数与逻辑",
+        "credit": 2.5
+    },
+    {
+        "course": "数据结构与算法",
+        "credit": 3.5
+    },
+    {
+        "course": "线性代数",
+        "credit": 3
+    },
+    {
+        "course": "概率论与数理方程",
+        "credit": 3
+    },
+    {
+        "course": "物联网工程导论",
+        "credit": 2
+    },
+    {
+        "course": "算法设计与分析",
+        "credit": 2
+    },
+    {
+        "course": "数字逻辑",
+        "credit": 3
+    },
+    {
+        "course": "数字逻辑实验",
+        "credit": 1
+    },
+    {
+        "course": "计算机组成原理",
+        "credit": 3
+    },
+    {
+        "course": "计算机组成原理课设",
+        "credit": 1.5
+    },
+    {
+        "course": "计算机系统结构",
+        "credit": 2
+    },
+    {
+        "course": "计算机网络",
+        "credit": 2.5
+    },
+    {
+        "course": "操作系统",
+        "credit": 3
+    },
+    {
+        "course": "高级语言程序设计",
+        "credit": 3.5
+    },
+    {
+        "course": "高级语言程序设计课设",
+        "credit": 1.5
+    },
+    {
+        "course": "面向对象程序设计",
+        "credit": 2.5
+    },
+    {
+        "course": "汇编语言程序设计",
+        "credit": 2
+    },
+    {
+        "course": "单片机原理与技术",
+        "credit": 2.5
+    },
+    {
+        "course": "嵌入式系统",
+        "credit": 2
+    },
+    {
+        "course": "无线传感器网络",
+        "credit": 2
+    },
+    {
+        "course": "无线传感器网络课设",
+        "credit": 1
+    },
+    {
+        "course": "嵌入式技术课设",
+        "credit": 2
+    },
+    {
+        "course": "编译原理",
+        "credit": 3
+    },
+    {
+        "course": "微型计算机接口",
+        "credit": 2
+    },
+    {
+        "course": "RFID技术",
+        "credit": 2.5
+    },
+    {
+        "course": "数据库原理",
+        "credit": 3
+    },
+    {
+        "course": "数据结构与算法课设",
+        "credit": 2
+    },
+    {
+        "course": "软件工程引论",
+        "credit": 2.5
+    },
+    {
+        "course": "软件类综合课设",
+        "credit": 2
+    },
+    {
+        "course": "计算机网络课设",
+        "credit": 1.5
+    },
+    {
+        "course": "物联网感知课设",
+        "credit": 2
+    },
+    {
+        "course": "物联网工程实践课设",
+        "credit": 2
+    }
+]
