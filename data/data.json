@@ -1,17 +1,5 @@
 [
   {
-    "account": "",
-    "password": "",
-    "power": 1,
-    "gender": "man",
-    "BaseSettings": {
-      "font": 1,
-      "size": {
-        "123": 234
-      }
-    }
-  },
-  {
     "account": "18061225",
     "password": "123456",
     "power": 1,

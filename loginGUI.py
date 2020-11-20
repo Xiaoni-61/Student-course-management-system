@@ -6,13 +6,14 @@
 
 import tkinter as tk
 import json
-from tkinter import scrolledtext, END
+from tkinter import scrolledtext, END, ttk
 
 import main
 from tkinter.scrolledtext import ScrolledText
 import json
 import random
 
+from Concrete_schedule import schedule
 from Credit import credit
 from gragh import Gragh
 
@@ -22,6 +23,7 @@ class loginGUI():
         self.window = tk.Toplevel()
         # 给窗口起一个标题
         self.window.title('课程管理系统')
+        self.window.iconbitmap("./icon/after.ico")
         # 设定窗口大小(长x宽，这里是使用字符'x'而不是星号*)
         # self.window.geometry('600x370')
 
@@ -38,6 +40,8 @@ class loginGUI():
         img4 = tk.PhotoImage(file="icon/lightgreen.png")
         img5 = tk.PhotoImage(file="icon/return.png")
         img6 = tk.PhotoImage(file="icon/normal_button.png")
+        img7 = tk.PhotoImage(file="icon/leftarrow.png")
+        img8 = tk.PhotoImage(file="icon/rightarrow.png")
         # 这里使用的是键值对（即属性: 值）的方式来设定参数，window表示该标签放置在window上，text为显示文本，bg(background)为背景颜色，
         # fg(fontground)为字体颜色，font=(字体, 字号)，width和height表示该标签的宽和高（如height为2表示该标签有2个字符那么高，这与字号的设定相关）
         '''
@@ -84,6 +88,12 @@ class loginGUI():
                                         height=18,
                                         cursor="hand2", relief="ridge", bd=1, image=img6, compound="center",
                                         font=("Consolas", 10))
+        self.normal_button3 = tk.Button(self.window, command=lambda: self.adjust_course(-1), width=50,
+                                        height=25,
+                                        cursor="hand2", relief="flat", bd=0, image=img7)
+        self.normal_button4 = tk.Button(self.window, command=lambda: self.adjust_course(1), width=50,
+                                        height=25,
+                                        cursor="hand2", relief="flat", bd=0, image=img8)
         self.scr1 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
         self.scr2 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
         self.scr3 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
@@ -93,6 +103,26 @@ class loginGUI():
         self.scr7 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
         self.scr8 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
         # self.scr1.insert(END, "计算机组成原理1") # 测试
+
+        self.L1 = tk.Label(self.window, text="输入需要调整的课程名：")
+
+        self.xls_text = tk.StringVar()
+        self.xls = tk.Entry(self.window, textvariable=self.xls_text, width=15)
+        self.xls.insert(15, "集合与图论")
+
+        self.xls_text2 = tk.StringVar()
+        self.courseChosen = ttk.Combobox(self.window, width=14, textvariable=self.xls_text2)
+        self.courseChosen['values'] = ("近代史", "思修", "毛概", "马原", "大学英语", "高级英语",
+                                       "高级英语阅读", "体育1", "体育2", "体育3", "体育4", "高数1", "大物1", "大物2", "大物实验1",
+                                       "大物实验2", "电路与电子技术", "电子与电子技术实验", "高数2", "集合与图论", "代数与逻辑", "数据结构与算法",
+                                       "线性代数", "概率论与数理方程", "物联网工程导论", "算法设计与分析", "数字逻辑", "数字逻辑实验", "计算机组成原理",
+                                       "计算机组成原理课设", "计算机系统结构", "计算机网络", "操作系统", "高级语言程序设计", "高级语言程序设计课设", "面向对象程序设计",
+                                       "汇编语言程序设计", "单片机原理与技术", "嵌入式系统", "无线传感器网络", "无线传感器网络课设", "嵌入式技术课设", "编译原理",
+                                       "微型计算机接口", "RFID技术", "数据库原理", "数据结构与算法课设", "软件工程引论", "软件类综合课设", "计算机网络课设",
+                                       "物联网感知课设", "物联网工程实践课设"
+                                       )  # 设置下拉列表的值
+
+        self.courseChosen.current(0)  # 设置下拉列表默认显示的值，0为 numberChosen['values'] 的下标值
 
         self.course_button1.place(x=10, y=65)
         self.course_button2.place(x=150, y=65)
@@ -104,6 +134,8 @@ class loginGUI():
         self.course_button8.place(x=430, y=205)
         self.normal_button1.place(x=550, y=10)
         self.normal_button2.place(x=485, y=10)
+        self.normal_button3.place(x=330, y=330)
+        self.normal_button4.place(x=400, y=330)
         self.scr1.place(x=10, y=110)  # 滚动文本框在页面的位置
         self.scr2.place(x=150, y=110)
         self.scr3.place(x=290, y=110)
@@ -112,7 +144,9 @@ class loginGUI():
         self.scr6.place(x=150, y=250)
         self.scr7.place(x=290, y=250)
         self.scr8.place(x=430, y=250)
-
+        # self.xls.place(x=200, y=333)
+        self.L1.place(x=70, y=333)
+        self.courseChosen.place(x=200, y=333)
         # 主窗口循环显示
 
         # 居中显示
@@ -127,11 +161,36 @@ class loginGUI():
         self.window.mainloop()
 
     # 使用Tk方法创建一个窗口，注意是大写T
-    def course_interface(self, a):
-        self.window.withdraw()
-        self.window.quit()
-        print(a)
-        tk.messagebox.showinfo(title='课程管理系统', message='进入第一学期课表')
+    # a为
+    def course_interface(self, courseNumber):
+
+        print(courseNumber)
+
+
+        if len(self.scr1.get(1.0, 'end')) != 1:
+
+            every_Schedule = schedule(courseNumber, self.g.res)
+            if courseNumber == 1:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第一学期课表')
+            if courseNumber == 2:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第二学期课表')
+            if courseNumber == 3:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第三学期课表')
+            if courseNumber == 4:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第四学期课表')
+            if courseNumber == 5:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第五学期课表')
+            if courseNumber == 6:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第六学期课表')
+            if courseNumber == 7:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第七学期课表')
+            if courseNumber == 8:
+                tk.messagebox.showinfo(title='课程管理系统', message='进入第八学期课表')
+
+        else:
+            tk.messagebox.showinfo(title='课程管理系统', message='错误！请先生成课表！')
+
+
 
     def make_course(self):
         f = open(r"data\test.json", encoding='UTF-8')
@@ -140,13 +199,22 @@ class loginGUI():
         getCreditSum = credit()
         print("continue")
         maxCreditSum = getCreditSum.x_int
-        g = Gragh(setting, maxCreditSum)
-        res = g.topoSort()
+        self.g = Gragh(setting, maxCreditSum)
+        res = self.g.topoSort()
 
         self.restoChart(res)
 
     def restoChart(self, res):
-        print("11111")
+        if self.scr2.get(1.0, 'end') != "":
+            self.scr1.delete(1.0, 'end')  # 删除所有元素
+            self.scr2.delete(1.0, 'end')
+            self.scr3.delete(1.0, 'end')
+            self.scr4.delete(1.0, 'end')
+            self.scr5.delete(1.0, 'end')
+            self.scr6.delete(1.0, 'end')
+            self.scr7.delete(1.0, 'end')
+            self.scr8.delete(1.0, 'end')
+
         for i in range(len(res)):
             if i == 0:
                 scr = self.scr1
@@ -162,6 +230,8 @@ class loginGUI():
                 scr = self.scr6
             elif i == 6:
                 scr = self.scr7
+            elif i == 7:
+                scr = self.scr8
             for j in range(len(res[i])):
                 if j == 0:
                     scr.insert(END, res[i][j])
@@ -169,11 +239,21 @@ class loginGUI():
                 else:
                     scr.insert(END, "\n" + res[i][j])
 
-    def refresh(self, i):
-        print(i)
+    def adjust_course(self, location):
+
+        coursename = self.courseChosen.get()
+        course = "概率论与数理方程"
+        courseAddress = 1
+
+        if len(self.scr1.get(1.0, 'end')) != 1:
+            res_adjust = self.g.adjustcourse(coursename, location)
+            if not res_adjust:
+                pass
+            else:
+                self.restoChart(res_adjust)
+        else:
+            pass
 
     def go_back(self):
         self.window.withdraw()
         main.main()
-
-

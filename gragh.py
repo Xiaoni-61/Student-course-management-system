@@ -3,11 +3,12 @@
 # @Time  : 2020/11/15 11:55
 # @Author: xiaoni
 # @File  : gragh.py
+import copy
 import json
 import random
 
 
-class Gragh():
+class Gragh:
     # def __init__(self):
     #     self.v = []
     #     self.e = []
@@ -106,7 +107,7 @@ class Gragh():
     '''
 
     def adjustcourse(self, course, courseAddress):
-        self.resBackUp = self.res
+        self.resBackUp = copy.deepcopy(self.res)  # !!!python中的变量名字是 贴标签 c语言中是真实的在内存中创建空间
         # 备份res（每学期课程数据）
         for i in range(len(self.res)):
             if course in self.res[i]:

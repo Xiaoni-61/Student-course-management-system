@@ -16,6 +16,7 @@ class signup():
     def __init__(self):
         self.window = tk.Toplevel()
         self.window.title('Tkinter is awesome!')
+        self.window.iconbitmap("./icon/after.ico")
         self.window.geometry('450x300')
 
         self.label_account = tkinter.Label(self.window, text='Account: ')

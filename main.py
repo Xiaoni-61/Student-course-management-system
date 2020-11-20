@@ -18,10 +18,11 @@ class Login(object):
         self.root = tkinter.Toplevel()
         # 给主窗口设置标题内容
         self.root.title("课程管理系统")
+        self.root.iconbitmap("./icon/first.ico")
         # self.root.geometry('450x300')
         # 运行代码时记得添加一个gif图片文件，不然是会出错的
         self.canvas = tkinter.Canvas(self.root, height=250, width=500)  # 创建画布
-        self.image_file = tkinter.PhotoImage(file='abc.gif')  # 加载图片文件
+        self.image_file = tkinter.PhotoImage(file=r'icon\abc.gif')  # 加载图片文件
         self.image = self.canvas.create_image(0, 0, anchor='nw', image=self.image_file)  # 将图片置于画布上
         self.canvas.pack(side='top')  # 放置画布（为上端）
 
