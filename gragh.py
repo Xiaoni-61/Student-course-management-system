@@ -14,10 +14,10 @@ class Gragh:
     #     self.e = []
 
     # 初始化
-    def __init__(self, setting, maxCreditSum):
+    def __init__(self, setting, maxCreditSum, ress):
         self.v = []
         self.e = []
-        self.res = []
+        self.res = ress
         self.resBackUp = []
         self.maxCreditSum = maxCreditSum
         for i in range(len(setting)):

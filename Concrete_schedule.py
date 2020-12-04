@@ -168,7 +168,7 @@ class schedule:
                 temp.append(self.nowCourseTime[ii][jj])
 
         self.nowCourseTime.append([])
-        for i in range(credit * 2):
+        for i in range(credit):
             day_in_week = random.randint(0, 4)
             time_in_day = random.randint(0, 7)
             eight_or_sixteen = random.randint(0, 1)

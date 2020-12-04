@@ -19,7 +19,9 @@ from gragh import Gragh
 
 
 class loginGUI():
-    def __init__(self):
+    def __init__(self, account):
+        self.account = account
+        self.temp_res = []
         self.window = tk.Toplevel()
         # 给窗口起一个标题
         self.window.title('课程管理系统')
@@ -158,6 +160,19 @@ class loginGUI():
         self.window.geometry(alignstr)
         # 大小不变
         self.window.resizable(0, 0)
+
+        ff = open(r".\data\data.json", encoding='UTF-8')
+        settingg = json.load(ff)
+
+        for i in range(len(settingg)):
+            if settingg[i]["account"] == self.account:
+                self.restoChart(settingg[i]["course"])
+
+                f = open(r"data\test.json", encoding='UTF-8')
+                setting = json.load(f)
+
+                self.g = Gragh(setting, settingg[i]["g"], settingg[i]["course"])
+
         self.window.mainloop()
 
     # 使用Tk方法创建一个窗口，注意是大写T
@@ -165,7 +180,6 @@ class loginGUI():
     def course_interface(self, courseNumber):
 
         print(courseNumber)
-
 
         if len(self.scr1.get(1.0, 'end')) != 1:
 
@@ -190,8 +204,6 @@ class loginGUI():
         else:
             tk.messagebox.showinfo(title='课程管理系统', message='错误！请先生成课表！')
 
-
-
     def make_course(self):
         f = open(r"data\test.json", encoding='UTF-8')
         setting = json.load(f)
@@ -199,8 +211,19 @@ class loginGUI():
         getCreditSum = credit()
         print("continue")
         maxCreditSum = getCreditSum.x_int
-        self.g = Gragh(setting, maxCreditSum)
+        self.g = Gragh(setting, maxCreditSum, [])
         res = self.g.topoSort()
+
+        ff = open(r".\data\data.json", encoding='UTF-8')
+        settingg = json.load(ff)
+
+        for i in range(len(settingg)):
+            if settingg[i]["account"] == self.account:
+                settingg[i]["course"] = res
+                settingg[i]["g"] = maxCreditSum
+
+        with open(r".\data\data.json", 'w') as fw:
+            json.dump(settingg, fw)
 
         self.restoChart(res)
 
@@ -250,6 +273,17 @@ class loginGUI():
             if not res_adjust:
                 pass
             else:
+                # ff = open(r".\data\data.json", encoding='UTF-8')
+                # settingg = json.load(ff)
+                #
+                # for i in range(len(settingg)):
+                #     if settingg[i]["account"] == self.account:
+                #         settingg[i]["course"] = res_adjust
+                #
+                # with open(r".\data\data.json", 'w') as fw:
+                #     json.dump(settingg, fw)
+                self.temp_res.append(res_adjust)
+
                 self.restoChart(res_adjust)
         else:
             pass

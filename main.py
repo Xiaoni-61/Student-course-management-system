@@ -41,8 +41,7 @@ class Login(object):
         # 创建一个注册系统的按钮
         self.siginUp_button = tkinter.Button(self.root, command=self.siginUp_interface, text="Sign up", width=10)
 
-        self.Button1 = tkinter.Button(self.root, background="#FF0000", activebackground="#0000ff",
-                                      activeforeground="#228B22", width=10)
+
 
         # 居中显示
         width = 450
@@ -61,7 +60,7 @@ class Login(object):
         self.input_password.place(x=135, y=195)
         self.login_button.place(x=140, y=235)
         self.siginUp_button.place(x=240, y=235)
-        self.Button1.place(x=340, y=265)
+
         # 进入注册界面
 
     def siginUp_interface(self):
@@ -82,11 +81,11 @@ class Login(object):
         if verifyResult == 'master':
             self.root.withdraw()
             # tkinter.messagebox.showinfo(title='课程管理系统', message='进入管理界面')
-            loginGUI.loginGUI()
+            loginGUI.loginGUI(account)
         elif verifyResult == 'user':
             self.root.withdraw()
             # tkinter.messagebox.showinfo(title='课程管理系统', message='进入用户界面')
-            loginGUI.loginGUI()
+            loginGUI.loginGUI(account)
         elif verifyResult == 'noAccount':
             tkinter.messagebox.showinfo(title='课程管理系统', message='该账号不存在请重新输入!')
             self.input_account.delete(0, END)
@@ -114,7 +113,7 @@ class Login(object):
                 if setting[i]['power'] == 0:
                     return "user"
                 break
-            if setting[i]["account"].ljust(10) == account or setting[i]["password"].ljust(10) == password:
+            if setting[i]["account"].ljust(10) == account and setting[i]["password"].ljust(10) != password:
                 return "noPassword"
                 break
         return "noAccount"

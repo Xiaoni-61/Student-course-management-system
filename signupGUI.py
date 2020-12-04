@@ -15,6 +15,13 @@ class signup():
 
     def __init__(self):
         self.window = tk.Toplevel()
+        self.window.iconbitmap("./icon/first.ico")
+
+        self.canvas = tkinter.Canvas(self.window, height=250, width=500)  # 创建画布
+        self.image_file = tkinter.PhotoImage(file=r'icon\abc.gif')  # 加载图片文件
+        self.image = self.canvas.create_image(0, 0, anchor='nw', image=self.image_file)  # 将图片置于画布上
+        self.canvas.pack(side='top')  # 放置画布（为上端）
+
         self.window.title('Tkinter is awesome!')
         self.window.iconbitmap("./icon/after.ico")
         self.window.geometry('450x300')
@@ -79,7 +86,9 @@ class signup():
         test_dict = {
             "account": account,
             "password": password,
-            "power": 0
+            "power": 0,
+            "course": [],
+            "g": []
         }
         if flag == 1:
             setting.append(test_dict)
