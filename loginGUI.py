@@ -16,12 +16,14 @@ import random
 from Concrete_schedule import schedule
 from Credit import credit
 from gragh import Gragh
+from relationGragh import relationGragh
 
 
 class loginGUI():
     def __init__(self, account):
         self.account = account
         self.temp_res = []
+        self.end_res = []
         self.window = tk.Toplevel()
         # 给窗口起一个标题
         self.window.title('课程管理系统')
@@ -44,6 +46,9 @@ class loginGUI():
         img6 = tk.PhotoImage(file="icon/normal_button.png")
         img7 = tk.PhotoImage(file="icon/leftarrow.png")
         img8 = tk.PhotoImage(file="icon/rightarrow.png")
+        img9 = tk.PhotoImage(file="icon/laststep.png")
+        img10 = tk.PhotoImage(file="icon/save.png")
+        img11 = tk.PhotoImage(file="icon/relation.png")
         # 这里使用的是键值对（即属性: 值）的方式来设定参数，window表示该标签放置在window上，text为显示文本，bg(background)为背景颜色，
         # fg(fontground)为字体颜色，font=(字体, 字号)，width和height表示该标签的宽和高（如height为2表示该标签有2个字符那么高，这与字号的设定相关）
         '''
@@ -96,6 +101,15 @@ class loginGUI():
         self.normal_button4 = tk.Button(self.window, command=lambda: self.adjust_course(1), width=50,
                                         height=25,
                                         cursor="hand2", relief="flat", bd=0, image=img8)
+        self.normal_button5 = tk.Button(self.window, command=self.laststep, width=25,
+                                        height=25,
+                                        cursor="hand2", relief="flat", bd=0, image=img9)
+        self.normal_button6 = tk.Button(self.window, command=self.save, width=25,
+                                        height=25,
+                                        cursor="hand2", relief="flat", bd=0, image=img10)
+        self.normal_button7 = tk.Button(self.window, command=self.relation, width=25,
+                                        height=25,
+                                        cursor="hand2", relief="flat", bd=0, image=img11)
         self.scr1 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
         self.scr2 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
         self.scr3 = scrolledtext.ScrolledText(self.window, width=16, height=5, font=("隶书", 10))
@@ -138,6 +152,9 @@ class loginGUI():
         self.normal_button2.place(x=485, y=10)
         self.normal_button3.place(x=330, y=330)
         self.normal_button4.place(x=400, y=330)
+        self.normal_button5.place(x=24, y=330)
+        self.normal_button6.place(x=24, y=20)
+        self.normal_button7.place(x=60, y=20)
         self.scr1.place(x=10, y=110)  # 滚动文本框在页面的位置
         self.scr2.place(x=150, y=110)
         self.scr3.place(x=290, y=110)
@@ -167,7 +184,7 @@ class loginGUI():
         for i in range(len(settingg)):
             if settingg[i]["account"] == self.account:
                 self.restoChart(settingg[i]["course"])
-
+                self.end_res = settingg[i]["course"]
                 f = open(r"data\test.json", encoding='UTF-8')
                 setting = json.load(f)
 
@@ -273,20 +290,39 @@ class loginGUI():
             if not res_adjust:
                 pass
             else:
-                # ff = open(r".\data\data.json", encoding='UTF-8')
-                # settingg = json.load(ff)
-                #
-                # for i in range(len(settingg)):
-                #     if settingg[i]["account"] == self.account:
-                #         settingg[i]["course"] = res_adjust
-                #
-                # with open(r".\data\data.json", 'w') as fw:
-                #     json.dump(settingg, fw)
-                self.temp_res.append(res_adjust)
 
+                self.temp_res.append(self.g.resBackUp)
+                self.end_res = res_adjust
                 self.restoChart(res_adjust)
         else:
             pass
+
+    def laststep(self):
+        print("退一步")
+        if not self.temp_res:
+            pass
+        else:
+            resNow = self.temp_res[len(self.temp_res) - 1]
+            self.end_res = resNow
+            self.temp_res.pop()
+
+            self.restoChart(resNow)
+
+    def save(self):
+        ff = open(r".\data\data.json", encoding='UTF-8')
+        settingg = json.load(ff)
+
+        for i in range(len(settingg)):
+            if settingg[i]["account"] == self.account:
+                settingg[i]["course"] = self.end_res
+
+        with open(r".\data\data.json", 'w') as fw:
+            json.dump(settingg, fw)
+
+        tk.messagebox.showinfo(title='课程管理系统', message='保存成功！')
+
+    def relation(self):
+        self.relation1 = relationGragh(self.end_res)
 
     def go_back(self):
         self.window.withdraw()
