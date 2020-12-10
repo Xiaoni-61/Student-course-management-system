@@ -19,7 +19,7 @@ from gragh import Gragh
 from relationGragh import relationGragh
 
 
-class loginGUI():
+class loginGUI:
     def __init__(self, account):
         self.account = account
         self.temp_res = []
@@ -192,14 +192,9 @@ class loginGUI():
 
         self.window.mainloop()
 
-    # 使用Tk方法创建一个窗口，注意是大写T
-    # a为
     def course_interface(self, courseNumber):
-
         print(courseNumber)
-
         if len(self.scr1.get(1.0, 'end')) != 1:
-
             every_Schedule = schedule(courseNumber, self.g.res)
             if courseNumber == 1:
                 tk.messagebox.showinfo(title='课程管理系统', message='进入第一学期课表')
@@ -217,28 +212,24 @@ class loginGUI():
                 tk.messagebox.showinfo(title='课程管理系统', message='进入第七学期课表')
             if courseNumber == 8:
                 tk.messagebox.showinfo(title='课程管理系统', message='进入第八学期课表')
-
         else:
             tk.messagebox.showinfo(title='课程管理系统', message='错误！请先生成课表！')
 
     def make_course(self):
         f = open(r"data\test.json", encoding='UTF-8')
         setting = json.load(f)
-
         getCreditSum = credit()
         print("continue")
         maxCreditSum = getCreditSum.x_int
         self.g = Gragh(setting, maxCreditSum, [])
         res = self.g.topoSort()
-
+        self.end_res = res
         ff = open(r".\data\data.json", encoding='UTF-8')
         settingg = json.load(ff)
-
         for i in range(len(settingg)):
             if settingg[i]["account"] == self.account:
                 settingg[i]["course"] = res
                 settingg[i]["g"] = maxCreditSum
-
         with open(r".\data\data.json", 'w') as fw:
             json.dump(settingg, fw)
 
@@ -254,7 +245,6 @@ class loginGUI():
             self.scr6.delete(1.0, 'end')
             self.scr7.delete(1.0, 'end')
             self.scr8.delete(1.0, 'end')
-
         for i in range(len(res)):
             if i == 0:
                 scr = self.scr1
@@ -275,22 +265,18 @@ class loginGUI():
             for j in range(len(res[i])):
                 if j == 0:
                     scr.insert(END, res[i][j])
-
                 else:
                     scr.insert(END, "\n" + res[i][j])
 
     def adjust_course(self, location):
 
         coursename = self.courseChosen.get()
-        course = "概率论与数理方程"
-        courseAddress = 1
 
         if len(self.scr1.get(1.0, 'end')) != 1:
             res_adjust = self.g.adjustcourse(coursename, location)
             if not res_adjust:
                 pass
             else:
-
                 self.temp_res.append(self.g.resBackUp)
                 self.end_res = res_adjust
                 self.restoChart(res_adjust)
@@ -305,17 +291,14 @@ class loginGUI():
             resNow = self.temp_res[len(self.temp_res) - 1]
             self.end_res = resNow
             self.temp_res.pop()
-
             self.restoChart(resNow)
 
     def save(self):
         ff = open(r".\data\data.json", encoding='UTF-8')
         settingg = json.load(ff)
-
         for i in range(len(settingg)):
             if settingg[i]["account"] == self.account:
                 settingg[i]["course"] = self.end_res
-
         with open(r".\data\data.json", 'w') as fw:
             json.dump(settingg, fw)
 

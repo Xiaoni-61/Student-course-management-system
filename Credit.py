@@ -19,14 +19,11 @@ class credit:
         l1 = tk.Label(self.root1, text="本学期需要修得的最大学分数(24~30)：")
         l1.pack()  # 这里的side可以赋值为LEFT  RTGHT TOP  BOTTOM
         self.xls_text = tk.StringVar()
-
         self.xls = tk.Entry(self.root1, textvariable=self.xls_text)
         self.xls.insert(10, "25")
         self.xls.pack()
-
         tk.Button(self.root1, text="确定", command=self.on_click).pack()
         print(self.x_int)
-
         # 居中显示
         width = 300
         height = 100
@@ -34,9 +31,7 @@ class credit:
         screenheight = self.root1.winfo_screenheight()
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.root1.geometry(alignstr)
-        # 大小不变
         self.root1.resizable(0, 0)
-
         self.root1.mainloop()
 
     def on_click(self):
@@ -46,8 +41,6 @@ class credit:
         try:
             if 24 <= (int)(self.x) <= 30:
                 self.root1.withdraw()
-
-                print("wo guanbi l ")
                 self.root1.quit()
             if (int)(self.x) < 20 or (int)(self.x) > 30:
                 self.xls.delete(0, END)

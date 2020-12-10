@@ -21,7 +21,7 @@ class Login(object):
         self.root.iconbitmap("./icon/first.ico")
         # self.root.geometry('450x300')
         # 运行代码时记得添加一个gif图片文件，不然是会出错的
-        self.canvas = tkinter.Canvas(self.root, height=250, width=500)  # 创建画布
+        self.canvas = tkinter.Canvas(self.root, height=500, width=500)  # 创建画布
         self.image_file = tkinter.PhotoImage(file=r'icon\abc.gif')  # 加载图片文件
         self.image = self.canvas.create_image(0, 0, anchor='nw', image=self.image_file)  # 将图片置于画布上
         self.canvas.pack(side='top')  # 放置画布（为上端）
@@ -40,8 +40,6 @@ class Login(object):
         self.login_button = tkinter.Button(self.root, command=self.backstage_interface, text="Login", width=10)
         # 创建一个注册系统的按钮
         self.siginUp_button = tkinter.Button(self.root, command=self.siginUp_interface, text="Sign up", width=10)
-
-
 
         # 居中显示
         width = 450
@@ -101,21 +99,16 @@ class Login(object):
     def verifyAccountData(self, account, password):
         # account=account[:-2]
         # password=password[:-2]
-        f = open(r".\data\data.json", encoding='UTF-8')  # 设置以utf-8解码模式读取文件，encoding参数必须设置，否则默认以gbk模式读取文件，当文件中包含中文时，会报错
+        f = open(r".\data\data.json", encoding='UTF-8')
         setting = json.load(f)
 
         aaa = setting[0]['account'].ljust(10)
 
         for i in range(len(setting)):
             if setting[i]['account'].ljust(10) == account and setting[i]['password'].ljust(10) == password:
-                if setting[i]['power'] == 1:
-                    return "master"
-                if setting[i]['power'] == 0:
-                    return "user"
-                break
+                return "user"
             if setting[i]["account"].ljust(10) == account and setting[i]["password"].ljust(10) != password:
                 return "noPassword"
-                break
         return "noAccount"
 
 

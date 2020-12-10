@@ -39,8 +39,8 @@ class relationGragh:
                                        height=25,
                                        cursor="hand2", relief="flat", bd=0, image=img1)
         self.normal_button2 = tk.Button(self.root2, command=self.goback, width=25,
-                                       height=25,
-                                       cursor="hand2", relief="flat", bd=0, image=img2)
+                                        height=25,
+                                        cursor="hand2", relief="flat", bd=0, image=img2)
 
         self.normal_button.place(x=5, y=10)
         self.normal_button2.place(x=1395, y=10)

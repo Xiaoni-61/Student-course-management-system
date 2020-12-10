@@ -9,10 +9,6 @@ import random
 
 
 class Gragh:
-    # def __init__(self):
-    #     self.v = []
-    #     self.e = []
-
     # 初始化
     def __init__(self, setting, maxCreditSum, ress):
         self.v = []
@@ -113,7 +109,6 @@ class Gragh:
             if course in self.res[i]:
                 j = i
                 break
-
         nowCourseArray = []
         nowCourseArray.append(self.member_dict[course])
         jjj = 0
@@ -136,7 +131,7 @@ class Gragh:
                         try:
                             if (jj + courseAddress) > 7:
                                 self.res = self.resBackUp  # 恢复数据
-                                return False
+                                return self.res
                             self.res[jj + courseAddress].append(self.member_dict2[nowCourseArray[i]])
                         except IndexError:
                             aa = []
@@ -150,17 +145,17 @@ class Gragh:
 
             for i in range(len(nowPreCourseArray)):
                 if self.member_dict2[nowPreCourseArray[i]] in self.res[j + courseAddress]:
-                    return False
+                    self.res = self.resBackUp  # 恢复数据
+                    return self.res
 
-            for i in range(len(nowCourseArray)):
-                for jj in range(len(self.res)):
-                    if self.member_dict2[nowCourseArray[i]] in self.res[jj]:
-                        self.res[jj].remove(self.member_dict2[nowCourseArray[i]])
-                        if (jj + courseAddress) < 0:
-                            self.res = self.resBackUp
-                            return False
-                        else:
-                            self.res[jj + courseAddress].append(self.member_dict2[nowCourseArray[i]])
+            for jj in range(len(self.res)):
+                if self.member_dict2[nowCourseArray[0]] in self.res[jj]:
+                    self.res[jj].remove(self.member_dict2[nowCourseArray[0]])
+                    if (jj + courseAddress) < 0:
+                        self.res = self.resBackUp  # 恢复数据
+                        return self.res
+                    else:
+                        self.res[jj + courseAddress].append(self.member_dict2[nowCourseArray[0]])
 
         return self.res
 
@@ -196,9 +191,7 @@ class Gragh:
                 tmp.remove(i[1])
         if not tmp:
             return -1
-
         tmp = self.rank_again(tmp)
-
         for t in tmp:
             for i in range(len(self.e)):
                 if t in self.e[i]:
@@ -210,7 +203,6 @@ class Gragh:
                     if self.e[r] == self.e[c]:
                         self.e.remove(self.e[r])
                         break  # 如果删除了后面元素,则无需继续用当前元素比较了
-
             self.e.remove('toDel')
             self.e[:] = list(self.e)
         if self.v:

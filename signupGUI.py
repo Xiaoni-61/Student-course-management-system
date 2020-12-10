@@ -17,12 +17,12 @@ class signup():
         self.window = tk.Toplevel()
         self.window.iconbitmap("./icon/first.ico")
 
-        self.canvas = tkinter.Canvas(self.window, height=250, width=500)  # 创建画布
+        self.canvas = tkinter.Canvas(self.window, height=500, width=500)  # 创建画布
         self.image_file = tkinter.PhotoImage(file=r'icon\abc.gif')  # 加载图片文件
         self.image = self.canvas.create_image(0, 0, anchor='nw', image=self.image_file)  # 将图片置于画布上
         self.canvas.pack(side='top')  # 放置画布（为上端）
 
-        self.window.title('Tkinter is awesome!')
+        self.window.title('注册界面')
         self.window.iconbitmap("./icon/after.ico")
         self.window.geometry('450x300')
 
@@ -73,35 +73,35 @@ class signup():
             tkinter.messagebox.showinfo(title='课程管理系统', message='两次输入密码不一致!')
             self.input_password.delete(0, END)
             self.input_password_again.delete(0, END)
+        else:
+            for i in range(len(setting)):
+                if setting[i]['account'].ljust(10) == account:
+                    tkinter.messagebox.showinfo(title='课程管理系统', message='输入账号已存在!')
+                    flag = 0
+                    self.input_account.delete(0, END)
+                    self.input_password.delete(0, END)
+                    self.input_password_again.delete(0, END)
+                    break
 
-        for i in range(len(setting)):
-            if setting[i]['account'].ljust(10) == account:
-                tkinter.messagebox.showinfo(title='课程管理系统', message='输入账号已存在!')
-                flag = 0
+            test_dict = {
+                "account": account,
+                "password": password,
+                "power": 0,
+                "course": [],
+                "g": []
+            }
+            if flag == 1:
+                setting.append(test_dict)
+                tkinter.messagebox.showinfo(title='课程管理系统', message='注册成功!')
                 self.input_account.delete(0, END)
                 self.input_password.delete(0, END)
                 self.input_password_again.delete(0, END)
-                break
 
-        test_dict = {
-            "account": account,
-            "password": password,
-            "power": 0,
-            "course": [],
-            "g": []
-        }
-        if flag == 1:
-            setting.append(test_dict)
-            tkinter.messagebox.showinfo(title='课程管理系统', message='注册成功!')
-            self.input_account.delete(0, END)
-            self.input_password.delete(0, END)
-            self.input_password_again.delete(0, END)
+            with open(r".\data\data.json", 'w') as fw:
+                json.dump(setting, fw)
 
-        with open(r".\data\data.json", 'w') as fw:
-            json.dump(setting, fw)
-
-        self.window.withdraw()
-        main.main()
+            self.window.withdraw()
+            main.main()
 
     def go_back(self):
         self.window.withdraw()

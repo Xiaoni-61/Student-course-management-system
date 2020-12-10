@@ -13,7 +13,7 @@ class schedule:
     def __init__(self, courseNumber, res):
         self.courseNumber = courseNumber
         self.res = res
-        self.relation_matrix_3d = [[[-1 for ii in range(2)] for ii in range(8)] for iii in range(5)]  # 创建临接矩阵
+        self.relation_matrix_3d = [[[-1 for ii in range(2)] for ii in range(8)] for iii in range(5)]  # 创建三维矩阵
         self.nowCourseTime = []
         self.win = tkinter.Toplevel()
         self.win.title("第" + str(courseNumber) + "学期课表")  # #窗口标题
@@ -49,16 +49,6 @@ class schedule:
         self.tree1.heading("星期三", text="星期三")
         self.tree1.heading("星期四", text="星期四")
         self.tree1.heading("星期五", text="星期五")
-
-        # self.tree.insert("", 0, text="1", values=("卡恩", "18", "180", "65"))  # #给第0行添加数据，索引值可重复
-        # self.tree.insert("", 1, text="2", values=("范冰冰", "38", "170", "55"))
-        # self.tree.insert("", 2, text="3", values=("戚薇", "28", "169", "50"))
-        # self.tree.insert("", 3, text="4", values=("杨霞", "30", "172", "63"))
-        # self.tree.insert("", 4, text="中午", values=("", "", "", ""))
-        # self.tree.insert("", 5, text="5", values=("迪丽热巴", "29", "175", "61"))
-        # self.tree.insert("", 5, text="6", values=("迪丽热巴", "29", "175", "61"))
-        # self.tree.insert("", 5, text="7", values=("迪丽热巴", "29", "175", "61"))
-        # self.tree.insert("", 5, text="8", values=("迪丽热巴", "29", "175", "61"))
 
         self.courseRank()
 
@@ -105,7 +95,7 @@ class schedule:
         # self.tree.insert("", 5, text="7", values=("迪丽热巴", "29", "175", "61"))
         # self.tree.insert("", 5, text="8", values=("迪丽热巴", "29", "175", "61"))
 
-        self.courseRank()
+        # self.courseRank()
 
         for i in range(8):
             self.tree.insert("", i, text=str(i + 1), values=(("" if self.relation_matrix_3d[0][i][1] == -1 else
@@ -138,11 +128,9 @@ class schedule:
         self.win.mainloop()
 
     def courseRank(self):
-
         while len(self.res) < 8:
             aa = []
             self.res.append(aa)
-
         ff = open(r".\data\course.json", encoding='UTF-8')
         setting1 = json.load(ff)
 
@@ -159,7 +147,6 @@ class schedule:
                 self.relation_matrix_3d[self.nowCourseTime[i][j][0]][self.nowCourseTime[i][j][1]][
                     self.nowCourseTime[i][j][2]] = i
 
-        print("111")
 
     def randomCourse(self, num, credit):
         temp = []
